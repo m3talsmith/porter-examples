@@ -1,0 +1,44 @@
+<html>
+  <head>
+    <title>Porter TIME!!!</title>
+    <link href='/static/css/styles.css' rel='stylesheet' type='text/css'/>
+  </head>
+  <body>
+    <div id='main'>
+      ..Main..
+    </div>
+
+    <div id='blinker'>
+      ..Blinker..
+    </div>
+
+    <script src="/static/js/porter.js"></script>
+    <script src="/static/js/hook.js"></script>
+
+    <script>
+      var connector = new WsConnector("ws://localhost:8080/websocket")
+
+      var hook = new Hook("main");
+      var blinker = new Hook("blinker");
+      blinker.random = function(){
+        this.element.innerHTML = Math.random().toString(36).substring(7);
+      }
+
+
+      var porter = new Porter(connector);
+      porter.whitelist.add_rpc("hook.render", function(args) {
+        hook.render(args);
+      });
+      porter.whitelist.add_rpc("blinker.random", function(args) {
+        setTimeout(function(){
+          porter.send("hi", "blinker.random", [])
+        }, 1000)
+      });
+
+      porter.connect();
+    </script>
+
+  </body>
+
+</html>
+ 
