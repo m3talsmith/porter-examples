@@ -1,0 +1,11 @@
+# App artifacts
+elixir_cowboy/_build
+elixir_cowboy/db
+elixir_cowboy/deps
+elixir_cowboy/*.ez
+elixir_cowboy/config/prod.secret.exs
+erl_crash.dump
+node_modules
+*.log
+*.sw*
+.DS_Store
